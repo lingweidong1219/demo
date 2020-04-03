@@ -28,7 +28,20 @@ public class TestRedis {
         Assert.assertEquals("111", stringRedisTemplate.opsForValue().get("aaa"));
     }
     @Test
-    public void testObj() throws Exception{
+    public void testObj() throws Exception {
+        User user=new User("1","a","MAN");
+        ValueOperations<String, User> operations=redisTemplate.opsForValue();
+        operations.set("test", user);
+//        operations.set("com.neo.f", user,1, TimeUnit.SECONDS);
+        Thread.sleep(1000);
+        redisTemplate.delete("com.neo.f");
+        boolean exists=redisTemplate.hasKey("test");
+        if(exists){
+            System.out.println("exists is true");
+        }else{
+            System.out.println("exists is false");
+        }
+        // Assert.assertEquals("aa", operations.get("com.neo.f").getUserName());
     }
 
 }

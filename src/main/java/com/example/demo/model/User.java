@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 
 import java.io.Serializable;
-import com.example.demo.enums.UserEnums;
 
 public class User implements Serializable {
 
@@ -10,14 +9,14 @@ public class User implements Serializable {
     private Long id;
     private String userName;
     private String passWord;
-    private UserEnums userSex;
+    private String userSex;
     private String nickName;
 
     public User() {
         super();
     }
 
-    public User(String userName, String passWord, UserEnums userSex) {
+    public User(String userName, String passWord, String userSex) {
         super();
         this.passWord = passWord;
         this.userName = userName;
@@ -48,12 +47,12 @@ public class User implements Serializable {
         this.passWord = passWord;
     }
 
-    public UserEnums getUserSex() {
-        return userSex;
+    public void setUserSex(String userSex) {
+        this.userSex = userSex;
     }
 
-    public void setUserSex(UserEnums userSex) {
-        this.userSex = userSex;
+    public String getUserSex(String userSex) {
+        return this.userSex;
     }
 
     public String getNickName() {
@@ -66,7 +65,11 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        return "userName " + this.userName + ", pasword " + this.passWord + "sex " + userSex.name();
+        return "User{" +
+                "id=" + this.id +
+                ", userName='" + this.userName + '\'' +
+                ", password='" + this.passWord + '\'' +
+                ", nickname='" + this.nickName + '\'' +
+                '}';
     }
 }
