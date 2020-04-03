@@ -9,10 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,11 +31,15 @@ public class TestRedis {
     @Test
     public void testObj() throws Exception {
         User user=new User("1","a","MAN");
+
+        RedisSerializer stringRedisSerializer=new StringRedisSerializer();
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer=new Jackson2JsonRedisSerializer(Object.class);
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         ValueOperations<String, User> operations=redisTemplate.opsForValue();
         operations.set("test", user);
-//        operations.set("com.neo.f", user,1, TimeUnit.SECONDS);
+
         Thread.sleep(1000);
-        redisTemplate.delete("com.neo.f");
         boolean exists=redisTemplate.hasKey("test");
         if(exists){
             System.out.println("exists is true");
